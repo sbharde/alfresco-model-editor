@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.core.contenttype.contentTypes">
+         <content-type
+            file-names="*.xml"
+            base-type="org.eclipse.core.runtime.xml"
+            name="Alfresco Model XML"
+            id="alfresco-model-xml"
+            priority="high"
+            file-extensions="xml">
+            <describer class="org.eclipse.core.runtime.content.XMLRootElementContentDescriber2">
+	            <parameter name="element" value="model"/>
+	        </describer>
+		</content-type>        
+    </extension>
+   <extension 
+         point="org.eclipse.wst.sse.ui.editorConfiguration">
+		<sourceViewerConfiguration class="org.eclipse.wst.html.ui.StructuredTextViewerConfigurationHTML"
+			target="org.eclipse.wst.html.core.htmlsource"/>
+			<!--
+		<contentOutlineConfiguration class="org.eclipse.wst.sse.xml.ui.views.contentoutline.XMLContentOutlineConfiguration"
+			target="org.eclipse.core.runtime.xml"/>
+			-->
+		 <propertySheetConfiguration class="org.eclipse.wst.xml.ui.views.properties.XMLPropertySheetConfiguration"
+			target=	"org.eclipse.wst.sse.contenttype.xml, org.eclipse.wst.html.core.htmlsource, org.eclipse.jst.jsp.core.jspsource"/>         
+   </extension>    
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="org.springframework.extensions.surf.alfresco.model.editor.ModelEditor"
+            contributorClass="org.eclipse.wst.xml.ui.internal.tabletree.XMLMultiPageEditorActionBarContributor"
+            extensions="xml"
+            icon="icons/AlfrescoLogo32.gif"
+            id="org.springframework.extensions.surf.alfresco.model.editor.ModelEditor"
+            name="Alfresco Model Editor">
+            <contentTypeBinding  contentTypeId="alfresco-model-xml"/>
+      </editor>
+   </extension>
+    <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            id="spring_surf_model_editor"
+            name="Alfresco Model">
+      </category>
+      <wizard
+            category="spring_surf_model_editor"
+            class="org.springframework.extensions.surf.alfresco.model.wizard.ModelNewWizard"
+            icon="icons/AlfrescoLogo32.gif"
+            id="org.springframework.extensions.surf.alfresco.model.wizard.ModelNewWizard"
+            finalPerspective="org.eclipse.jdt.ui.JavaPerspective"
+            name="Alfresco Model">
+      </wizard>
+      </extension>
+   <extension
+         point="org.eclipse.wst.xml.core.catalogContributions">
+      <catalogContribution
+            id="AlfrescoModelXMLSchema">
+            <uri 
+			name="http://www.springsurf.org/schemas/AlfrescoModelXMLSchema.xsd" 
+			uri="schemas/modelSchema.xsd"/>            
+      		<uri 
+			name="http://www.springsurf.org/schemas/AlfrescoFormXMLSchema.xsd" 
+			uri="schemas/form-config-3.3.xsd"/>                 
+      </catalogContribution>
+   </extension>
+   <extension point="org.eclipse.ui.perspectiveExtensions">
+		<perspectiveExtension 
+				targetID="org.eclipse.jdt.ui.JavaPerspective">
+			<newWizardShortcut id="org.springframework.extensions.surf.alfresco.model.wizard.ModelNewWizard"/>					
+	    </perspectiveExtension>
+		<perspectiveExtension 
+				targetID="org.eclipse.jdt.ui.JavaBrowsingPerspective">
+			<newWizardShortcut id="org.springframework.extensions.surf.alfresco.model.wizard.ModelNewWizard"/>					
+	    </perspectiveExtension>
+		<perspectiveExtension 
+				targetID="org.eclipse.jdt.ui.JavaHierarchyPerspective">
+			<newWizardShortcut id="org.springframework.extensions.surf.alfresco.model.wizard.ModelNewWizard"/>					
+	    </perspectiveExtension>
+		<perspectiveExtension 
+				targetID="org.eclipse.jst.j2ee.J2EEPerspective">
+			<newWizardShortcut id="org.springframework.extensions.surf.alfresco.model.wizard.ModelNewWizard"/>					
+	    </perspectiveExtension>
+      </extension>
+      <extension
+         point="org.eclipse.ui.propertyPages">
+      <page
+            class="org.springframework.extensions.surf.alfresco.model.editor.properties.ModelPropertyPage"
+            id="org.springframework.extensions.surf.alfresco.model.editor.properties.modelPropertyPage"
+            name="Alfresco Model Settings"
+            nameFilter="*.*">
+         <enabledWhen>
+            <instanceof
+                  value="org.eclipse.core.resources.IFile">
+            </instanceof>
+         </enabledWhen>
+      </page>
+   </extension>
+</plugin>
