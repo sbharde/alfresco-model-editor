@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+	<!-- Definition of new Model -->
+
+	<!--
+		The important part here is the name - Note: the use of the my:
+		namespace which is defined further on in the document
+	-->
+<model name="my:mynewmodel" xmlns="http://www.alfresco.org/model/dictionary/1.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.alfresco.org/model/dictionary/1.0 http://www.springsurf.org/schemas/AlfrescoModelXMLSchema.xsd">
+
+	<!-- Optional meta-data about the model -->
+	<description>Example custom Model</description>
+	<author></author>
+	<version>1.0</version>
+
+	<!--
+		Imports are required to allow references to definitions in other
+		models
+	-->
+	<imports>
+		<!-- Import Alfresco Dictionary Definitions -->
+		<import uri="http://www.alfresco.org/model/dictionary/1.0"
+			prefix="d" />
+		<!-- Import Alfresco Content Domain Model Definitions -->
+		<import uri="http://www.alfresco.org/model/content/1.0" prefix="cm" />
+	</imports>
+
+	<!-- Introduction of new namespaces defined by this model -->
+	<!--
+		NOTE: The following namespace my.new.model should be changed to
+		reflect your own namespace
+	-->
+	<namespaces>
+		<namespace uri="my.new.model" prefix="my" />
+	</namespaces>
+
+	<types>
+
+		<!-- Definition of new Content Type: Standard Operating Procedure -->
+		<type name="my:sop">
+			<title>Standard Operating Procedure</title>
+			<parent>cm:content</parent>
+			<properties>
+				<property name="my:publishedDate">
+					<type>d:datetime</type>
+				</property>
+				<property name="my:authorisedBy">
+					<type>d:text</type>
+					<constraints>
+						<constraint ref="my:regex1" />
+						<constraint ref="my:stringLength1" />
+					</constraints>
+				</property>
+			</properties>
+			<associations>
+				<association name="my:signOff">
+					<source>
+						<mandatory>false</mandatory>
+						<many>false</many>
+					</source>
+					<target>
+						<class>cm:content</class>
+						<mandatory>false</mandatory>
+						<many>false</many>
+					</target>
+				</association>
+				<child-association name="my:processSteps">
+					<source>
+						<mandatory>false</mandatory>
+						<many>false</many>
+					</source>
+					<target>
+						<class>cm:content</class>
+						<mandatory>false</mandatory>
+						<many>true</many>
+					</target>
+				</child-association>
+			</associations>
+		</type>
+
+	</types>
+
+	<aspects>
+
+		<!-- Definition of new Content Aspect: Image Classification -->
+		<aspect name="my:imageClassification">
+			<title>Image Classfication</title>
+			<properties>
+				<property name="my:width">
+					<type>d:int</type>
+				</property>
+				<property name="my:height">
+					<type>d:int</type>
+				</property>
+				<property name="my:resolution">
+					<type>d:int</type>
+				</property>
+			</properties>
+		</aspect>
+
+	</aspects>
+	<constraints>
+		<constraint name="my:regex1" type="REGEX">
+			<parameter name="expression">
+				<value>[A-Z]*</value>
+			</parameter>
+			<parameter name="requiresMatch">
+				<value>false</value>
+			</parameter>
+		</constraint>
+		<constraint name="my:regex2" type="REGEX">
+			<parameter name="expression">
+				<value>[a-z]*</value>
+			</parameter>
+			<parameter name="requiresMatch">
+				<value>false</value>
+			</parameter>
+		</constraint>
+		<constraint name="my:stringLength1" type="LENGTH">
+			<parameter name="minLength">
+				<value>0</value>
+			</parameter>
+			<parameter name="maxLength">
+				<value>256</value>
+			</parameter>
+		</constraint>
+		<constraint name="my:stringLength2" type="LENGTH">
+			<parameter name="minLength">
+				<value>0</value>
+			</parameter>
+			<parameter name="maxLength">
+				<value>128</value>
+			</parameter>
+		</constraint>
+		<constraint name="my:minMax1" type="MINMAX">
+			<parameter name="minValue">
+				<value>0</value>
+			</parameter>
+			<parameter name="maxValue">
+				<value>256</value>
+			</parameter>
+		</constraint>
+		<constraint name="my:list1" type="LIST">
+			<parameter name="allowedValues">
+				<list>
+					<value>ABC</value>
+					<value>DEF</value>
+				</list>
+			</parameter>
+			<parameter name="caseSensitive">
+				<value>true</value>
+			</parameter>
+		</constraint>
+	</constraints>
+
+
+</model>
