@@ -1,0 +1,1 @@
+Eclipse plugins for Alfresco model editor.
